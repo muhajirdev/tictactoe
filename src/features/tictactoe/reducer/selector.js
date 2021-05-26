@@ -54,6 +54,7 @@ export const getWinner = (players, grid) => {
   return win.player
 }
 
+// TODO: use enums
 export const getGameStatus = (state) => {
   if (getWinner(state.players, state.grid)) {
     return 'won'
