@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from '../../App'
 
-test('renders learn react link', () => {
+test('render the right turn', () => {
   render(<App />)
   // x is default `turn`
   const turnElement = screen.getByTestId('turn-element')
