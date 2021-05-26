@@ -1,4 +1,12 @@
-import { initialState, reducer, getWinner, getGameStatus } from './reducer'
+import {
+  initialState,
+  reducer,
+  play,
+  restart,
+  getGameStatus,
+  getWinner,
+} from './reducer/index'
+
 import { useReducer } from 'react'
 import { WinPopup } from './ui/win-popup'
 import { Board } from './ui/board'
@@ -12,21 +20,12 @@ export const TicTacToe = () => {
   const winner = getWinner(state.players, state.grid)
   const status = getGameStatus(state)
 
-  const restart = () => {
-    dispatch({ type: 'restarted' })
-  }
-
-  const play = ({ x, y }) => {
-    const position = { x, y }
-    dispatch({ type: 'played', payload: { position } })
-  }
-
   let popUp
   if (status === 'won') {
-    popUp = <WinPopup winner={winner} onPlayAgain={restart} />
+    popUp = <WinPopup winner={winner} onPlayAgain={() => dispatch(restart())} />
   }
   if (status === 'draw') {
-    popUp = <DrawPopup onPlayAgain={restart} />
+    popUp = <DrawPopup onPlayAgain={() => dispatch(restart())} />
   }
 
   return (
@@ -34,7 +33,7 @@ export const TicTacToe = () => {
       {popUp}
       <Turn turn={state.turn} />
       <div className="h-8"></div>
-      <Board grid={state.grid} play={play} />
+      <Board grid={state.grid} play={(position) => dispatch(play(position))} />
     </div>
   )
 }
